@@ -1,14 +1,29 @@
 {
+  "autoCompactWindow": 800000,
   "permissions": {
     "allow": [
       "Bash(npx prisma *)",
       "Bash(mkdir -p \"d:/Study/Projects/mini_mall/prisma\")",
       "Bash(node -e \"console.log\\(require\\('next-auth/package.json'\\).version\\)\")",
       "Bash(git add *)",
-      "Bash(git commit -m 'feat: init Mini Mall project *)"
+      "Bash(git commit -m 'feat: init Mini Mall project *)",
+      "Bash(npx next *)"
     ],
     "additionalDirectories": [
       "d:\\Study\\Projects\\mini_mall"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"文件已修改，建议检查一下改了什么\""
+          }
+        ]
+      }
     ]
   }
 }

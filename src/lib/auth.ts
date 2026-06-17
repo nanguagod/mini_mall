@@ -1,6 +1,5 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import type { JWT } from "next-auth/jwt";
 import { compare } from "bcryptjs";
 import prisma from "./prisma";
 
@@ -10,11 +9,18 @@ declare module "next-auth" {
   }
   interface Session {
     user: {
-      id: number;
+      id: string;
       name?: string | null;
       email?: string | null;
       role?: string;
     };
+  }
+}
+
+declare module "@auth/core/jwt" {
+  interface JWT {
+    id?: string;
+    role?: string;
   }
 }
 
@@ -57,16 +63,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   callbacks: {
     async jwt({ token, user }) {
-      if (user) {
-        token.id = parseInt(user.id);
+      if (user && user.id) {
+        token.id = user.id;
         token.role = user.role;
       }
       return token;
     },
     async session({ session, token }) {
       if (token) {
-        session.user.id = token.id as number;
-        session.user.role = token.role as string;
+        session.user.id = token.id!;
+        session.user.role = token.role!;
       }
       return session;
     },
