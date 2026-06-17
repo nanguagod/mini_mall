@@ -3,7 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import prisma from "@/lib/prisma";
 import { formatPrice } from "@/lib/utils";
-import { ShoppingCart, Package } from "lucide-react";
+import { Package } from "lucide-react";
+import AddToCartButton from "@/components/product/add-to-cart-button";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -113,13 +114,11 @@ export default async function ProductDetail({ params }: Props) {
           </div>
 
           {/* 加入购物车按钮 */}
-          <button
-            disabled={outOfStock}
-            className="flex items-center justify-center gap-2 w-full sm:w-64 px-8 py-3.5 bg-accent text-white rounded-xl font-medium hover:bg-accent-hover disabled:bg-surface-tertiary disabled:cursor-not-allowed transition-colors shadow-sm"
-          >
-            <ShoppingCart className="w-5 h-5" />
-            {outOfStock ? "暂时缺货" : "加入购物车"}
-          </button>
+          <AddToCartButton
+            productId={product.id}
+            productName={product.name}
+            outOfStock={outOfStock}
+          />
           {outOfStock && (
             <p className="text-xs text-text-tertiary mt-2">
               该商品暂时缺货，请关注后续补货
