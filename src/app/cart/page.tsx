@@ -5,9 +5,10 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import toast from "react-hot-toast";
-import { ShoppingCart, Trash2, Minus, Plus, ArrowLeft, Package } from "lucide-react";
+import { ShoppingCart, Trash2, ArrowLeft, Package } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
 import type { CartItemWithProduct } from "@/types";
+import QuantityControl from "@/components/cart/quantity-control";
 
 export default function CartPage() {
   const router = useRouter();
@@ -102,6 +103,7 @@ export default function CartPage() {
       toast.success("已移除");
     } catch {
       toast.error("网络错误，请稍后重试");
+      fetchCart();
     } finally {
       setUpdatingIds((prev) => {
         const next = new Set(prev);
@@ -241,36 +243,13 @@ export default function CartPage() {
 
                 {/* 数量和操作 */}
                 <div className="flex items-center justify-between mt-3">
-                  {/* 数量调节 */}
-                  <div className="flex items-center gap-1">
-                    <button
-                      onClick={() =>
-                        handleUpdateQuantity(item.id, item.quantity - 1)
-                      }
-                      disabled={isUpdating || outOfStock}
-                      className="w-8 h-8 rounded-lg border border-border flex items-center justify-center hover:bg-surface-tertiary disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-                      aria-label="减少数量"
-                    >
-                      <Minus className="w-3.5 h-3.5 text-text-secondary" />
-                    </button>
-                    <span className="w-10 text-center text-sm font-medium text-text-primary">
-                      {item.quantity}
-                    </span>
-                    <button
-                      onClick={() =>
-                        handleUpdateQuantity(item.id, item.quantity + 1)
-                      }
-                      disabled={
-                        isUpdating ||
-                        outOfStock ||
-                        item.quantity >= item.product.stock
-                      }
-                      className="w-8 h-8 rounded-lg border border-border flex items-center justify-center hover:bg-surface-tertiary disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-                      aria-label="增加数量"
-                    >
-                      <Plus className="w-3.5 h-3.5 text-text-secondary" />
-                    </button>
-                  </div>
+                  <QuantityControl
+                    quantity={item.quantity}
+                    stock={item.product.stock}
+                    disabled={isUpdating || outOfStock}
+                    onDecrease={() => handleUpdateQuantity(item.id, item.quantity - 1)}
+                    onIncrease={() => handleUpdateQuantity(item.id, item.quantity + 1)}
+                  />
 
                   {/* 小计和删除 */}
                   <div className="flex items-center gap-3 sm:gap-4">
