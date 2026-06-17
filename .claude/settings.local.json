@@ -1,5 +1,4 @@
 {
-  "autoCompactWindow": 800000,
   "permissions": {
     "allow": [
       "Bash(npx prisma *)",
@@ -7,23 +6,17 @@
       "Bash(node -e \"console.log\\(require\\('next-auth/package.json'\\).version\\)\")",
       "Bash(git add *)",
       "Bash(git commit -m 'feat: init Mini Mall project *)",
-      "Bash(npx next *)"
+      "Bash(npx next *)",
+      "Bash(gh pr *)",
+      "Bash(npm install *)",
+      "Bash(rm -rf \"d:/Study/Projects/mini_mall/src/app/api/auth/\\\\[...nextauth\\\\]\")",
+      "Bash(rm -rf \"d:/Study/Projects/mini_mall/src/app/api/auth/[...nextauth]\")",
+      "Bash(npm run *)"
     ],
     "additionalDirectories": [
-      "d:\\Study\\Projects\\mini_mall"
-    ]
-  },
-  "hooks": {
-    "PostToolUse": [
-      {
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "echo \"文件已修改，建议检查一下改了什么\""
-          }
-        ]
-      }
+      "d:\\Study\\Projects\\mini_mall",
+      "d:\\Study\\Projects\\mini_mall\\src\\app\\api\\auth\\[...nextauth",
+      "d:\\Study\\Projects\\mini_mall\\src\\app\\api\\auth\\[...nextauth]"
     ]
   }
 }

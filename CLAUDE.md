@@ -121,6 +121,9 @@ npm run db:push       # 直接同步 Schema 到数据库
 
 ## 开发规范
 
+- **TypeScript 严格模式** — `strict: true` 已开启，禁止使用 `any` 绕过类型检查
+- **UI 文案用中文** — 所有面向用户的界面文字使用中文
+- **代码注释用中文** — 注释、JSDoc、TODO 等使用中文书写
 - 使用 App Router 和 Server Components 优先
 - Server Actions 统一放在 `src/actions/` 目录
 - UI 组件使用 Tailwind CSS 4 + shadcn/ui 风格
